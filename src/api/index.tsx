@@ -16,7 +16,7 @@ const fetchMeters = (page = 1, limit = 20) => {
 };
 
 const deleteMeter = (meterId) => {
-  fetch(`http://showroom.eis24.me/api/v4/test/meters/${meterId}/`, {
+  return fetch(`http://showroom.eis24.me/api/v4/test/meters/${meterId}/`, {
     method: 'DELETE',
   });
 };
