@@ -1,4 +1,5 @@
 import { Counter } from '../../@types';
+import { useMeters } from '../api';
 import { Cell } from '../app/components/cell';
 
 function formatDate(dateString: string) {
@@ -49,7 +50,7 @@ export const Comlumns = () => {
     },
     {
       title: 'Адрес',
-      dataIndex: 'address',
+      dataIndex: 'area',
       key: 'address',
       width: 430,
     },
