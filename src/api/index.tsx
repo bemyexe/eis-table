@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   keepPreviousData,
   useMutation,
+  useQueries,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
@@ -11,6 +12,12 @@ const fetchMeters = (page = 1, limit = 20) => {
   return fetch(
     `http://showroom.eis24.me/api/v4/test/meters/?limit=${limit}&offset=${offset}`
   )
+    .then((res) => res.json())
+    .then((res) => res.results);
+};
+
+const fetchAreas = (meterId) => {
+  return fetch(`http://showroom.eis24.me/api/v4/test/areas/?id__in=${meterId}`)
     .then((res) => res.json())
     .then((res) => res.results);
 };
@@ -26,7 +33,7 @@ export const useMeters = () => {
 
   const [page, setPage] = useState(1);
 
-  const { data, isLoading } = useQuery({
+  const { data: meters, isLoading } = useQuery({
     queryKey: ['meters', page],
     queryFn: () => fetchMeters(page),
     placeholderData: keepPreviousData,
@@ -43,5 +50,41 @@ export const useMeters = () => {
     mutation.mutate(meterId);
   };
 
-  return { data, isLoading, page, setPage, handleDelete };
+  return { meters, isLoading, page, setPage, handleDelete };
 };
+
+export const useAreas = (meters) => {
+  const areasQueries = useQueries({
+    queries: meters
+      ? meters.map((meter) => {
+          return {
+            queryKey: ['area', meter.area.id],
+            queryFn: () => fetchAreas(meter.area.id),
+            select: (areas) => {
+              return {
+                id: areas[0].id,
+                address: `${areas[0].house.address}, ${areas[0].str_number_full}`,
+              };
+            },
+            staleTime: Infinity,
+          };
+        })
+      : [],
+    combine: (res) => {
+      return {
+        data: res.map((res) => res.data),
+        success: res.every((res) => res.isSuccess),
+      };
+    },
+  });
+  // console.log('useAreas', areasQueries);
+
+  return { areasQueries };
+};
+
+// const areas = areas1.map((a) => {
+//   return {
+//     id: a.id,
+//     address: `${a.house.address}, ${a.str_number_full}`,
+//   };
+// });
