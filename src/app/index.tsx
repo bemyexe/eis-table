@@ -1,36 +1,43 @@
+import { useState } from 'react';
 import Table from 'rc-table';
 
-import { useAreas, useMeters } from '../api';
-import { Comlumns } from '../const/const';
+import { Area, Meter } from '../../@types';
+import { useMetersQuery } from '../api/hooks/';
+import { useAreasQuery } from '../api/hooks/use-areas-query';
+
+import { COLUMNS } from './components/columns';
 
 import './style.css';
 
-export const App = () => {
-  const { columns } = Comlumns();
+const MAX_TABLE_HEIGHT = 870;
 
-  const { meters, isLoading, page, setPage } = useMeters();
-  const { areasQueries } = useAreas(meters);
+export const App = () => {
+  const [page, setPage] = useState(1);
+
+  const { meters, isLoading } = useMetersQuery(page);
+  const { areas, isSuccessAreas } = useAreasQuery(meters);
+
+  // const areas1 = formatAreas(areas);
+
   if (isLoading) return <div>Loading</div>;
 
-  // const data = [...meters, ...areas];
+  // const newArray = meters?.map((meter: Meter) => {
+  //   const area =
+  //     isSuccessAreas && areas1?.find((a: Area) => a.id === meter.area.id);
 
-  const newArray = meters.map((meter) => {
-    const area =
-      areasQueries.success &&
-      areasQueries.data.find((a) => a.id === meter.area.id);
-    return {
-      ...meter,
-      area: area?.address,
-    };
-  });
+  //   return {
+  //     ...meter,
+  //     area: area?.address,
+  //   };
+  // });
 
   return (
     <div className="app">
       <Table
         className="table"
-        columns={columns}
-        data={newArray}
-        scroll={{ y: 870 }}
+        columns={COLUMNS}
+        data={meters}
+        scroll={{ y: MAX_TABLE_HEIGHT }}
         footer={() => (
           <div>
             <button

@@ -1,4 +1,19 @@
 .trash {
-  display: flex;
   justify-content: center;
+  padding: 0;
+  .trash-icon {
+    padding: 12px;
+    background: var(--red-100);
+    border-radius: 8px;
+    &:active {
+      background: var(--red-200);
+    }
+    &:disabled {
+      background: var(--gray-100);
+    }
+  }
+}
+
+.type-cell {
+  gap: 10px;
 }

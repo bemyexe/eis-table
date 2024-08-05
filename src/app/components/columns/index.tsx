@@ -2,11 +2,22 @@ import { ReactNode } from 'react';
 
 import { formatDate } from '../../../helpers';
 import { Icon } from '../shared/icon';
-import { Icons } from '../shared/icon/enum/icon-enum';
+import { IconKey, Icons } from '../shared/icon/enum/icon-enum';
 
 import { Cell } from './cell';
 
 import './style.css';
+
+const IS_AUTOMATIC_MAP: { [key: string]: string } = {
+  null: 'Н/Д',
+  true: 'Да',
+  false: 'Нет',
+};
+
+const TYPE_MAP: { [key: string]: string } = {
+  ColdWaterAreaMeter: 'ХВС',
+  HotWaterAreaMeter: 'ГВС',
+};
 
 interface ColumnProps {
   title: string;
@@ -15,12 +26,6 @@ interface ColumnProps {
   width: number;
   render: (value: any, record: any, index: number) => ReactNode;
 }
-
-const IS_AUTOMATIC_MAP: { [key: string]: string } = {
-  null: 'Н/Д',
-  true: 'Да',
-  false: 'Нет',
-};
 
 export const COLUMNS: ColumnProps[] = [
   {
@@ -39,7 +44,12 @@ export const COLUMNS: ColumnProps[] = [
     dataIndex: '_type',
     key: '_type',
     width: 120,
-    render: (value) => <Cell>{value[0]}</Cell>,
+    render: (value: IconKey[]) => (
+      <Cell className="type-cell">
+        <Icon name={Icons[value[0]]} />
+        {TYPE_MAP[value[0]]}
+      </Cell>
+    ),
   },
   {
     title: 'Дата установки',
@@ -83,11 +93,9 @@ export const COLUMNS: ColumnProps[] = [
     width: 72,
     render: (_, record) => (
       <Cell className="trash">
-        <Icon
-          className="trash-icon"
-          name={Icons.trash}
-          onClick={() => console.log(record.id)}
-        />
+        <div className="trash-icon">
+          <Icon name={Icons.trash} onClick={() => console.log(record.id)} />
+        </div>
       </Cell>
     ),
   },
