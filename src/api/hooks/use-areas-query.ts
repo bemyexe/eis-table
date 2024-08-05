@@ -1,33 +1,29 @@
 import { useQueries } from '@tanstack/react-query';
 
+import { Areas, Meter, Meters } from '../../../@types';
 import { getAreas } from '../requests';
 
-export const useAreasQuery = (meters) => {
+export const useAreasQuery = (meters: Meters) => {
   const areasQueries = useQueries({
     queries: meters
-      ? meters.map((meter) => {
+      ? meters.map((meter: Meter) => {
           return {
             queryKey: ['area', meter.area.id],
             queryFn: () => getAreas(meter.area.id),
-            select: (areas) => {
-              return {
-                id: areas[0].id,
-                address: `${areas[0].house.address}, ${areas[0].str_number_full}`,
-              };
-            },
+            select: (areas: Areas) => areas[0],
             staleTime: Infinity,
           };
         })
       : [],
     combine: (res) => {
       return {
-        dataArea: res.map((res) => res.data),
-        successArea: res.every((res) => res.isSuccess),
+        areas: res.map((res) => res.data),
+        isSuccessAreas: res.every((res) => res.isSuccess),
       };
     },
   });
 
-  const { dataArea, successArea } = areasQueries;
+  const { areas, isSuccessAreas } = areasQueries;
 
-  return { dataArea, successArea };
+  return { areas, isSuccessAreas };
 };
