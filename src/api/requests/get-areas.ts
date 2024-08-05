@@ -1,4 +1,6 @@
-export const getAreas = (meterId: string) => {
+import { Areas, Meter } from '../../../@types';
+
+export const getAreas = (meterId: Meter['id']): Promise<Areas> => {
   return fetch(`http://showroom.eis24.me/api/v4/test/areas/?id__in=${meterId}`)
     .then((res) => res.json())
     .then((res) => res.results);
