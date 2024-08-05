@@ -1,71 +1,12 @@
-import { Counter } from '../../@types';
-import { useMeters } from '../api';
-import { Cell } from '../app/components/cell';
-
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
-  const year = date.getFullYear();
-
-  return `${day}.${month}.${year}`;
+interface Counter {
+  id: number;
+  type: string;
+  date: number;
+  isAutomatic: string;
+  currentValue: number;
+  address: string;
+  description: string;
 }
-export const Comlumns = () => {
-  const columns = [
-    {
-      title: '№',
-      dataIndex: 'id',
-      key: 'id',
-      width: 48,
-      render: (value: string, record, index) => <span>{index + 1}</span>,
-    },
-    {
-      title: 'Тип',
-      dataIndex: '_type',
-      key: 'type',
-      width: 120,
-      render: (value) => <span>{value[0]}</span>,
-    },
-    {
-      title: 'Дата установки',
-      dataIndex: 'installation_date',
-      key: 'date',
-      width: 160,
-      render: (value: string) => <span>{formatDate(value)}</span>,
-    },
-    {
-      title: 'Автоматический',
-      dataIndex: 'is_automatic',
-      key: 'isAutomatic',
-      width: 128,
-      render: (value: boolean) => (
-        <span>{value === null ? 'N/D' : value ? 'Да' : 'Нет'}</span>
-      ),
-    },
-    {
-      title: 'Текущие показания',
-      dataIndex: 'initial_values',
-      key: 'currentValue',
-      width: 146,
-    },
-    {
-      title: 'Адрес',
-      dataIndex: 'area',
-      key: 'address',
-      width: 430,
-    },
-    {
-      title: 'Примечание',
-      dataIndex: 'description',
-      key: 'description',
-      width: 376,
-      render: (value: string, record) => <Cell value={value} id={record.id} />,
-    },
-  ];
-
-  return { columns };
-};
-
 export const FAKE: Counter[] = [
   {
     id: 1,
