@@ -1,17 +1,26 @@
 import { ReactNode } from 'react';
 
 import { formatDate } from '../../../helpers';
-import { Cell } from '../cell';
 import { Icon } from '../shared/icon';
 import { Icons } from '../shared/icon/enum/icon-enum';
+
+import { Cell } from './cell';
+
+import './style.css';
 
 interface ColumnProps {
   title: string;
   dataIndex: string;
   key: string;
   width: number;
-  render?: (value: any, record: any, index: number) => ReactNode;
+  render: (value: any, record: any, index: number) => ReactNode;
 }
+
+const IS_AUTOMATIC_MAP: { [key: string]: string } = {
+  null: 'Н/Д',
+  true: 'Да',
+  false: 'Нет',
+};
 
 export const COLUMNS: ColumnProps[] = [
   {
@@ -19,49 +28,53 @@ export const COLUMNS: ColumnProps[] = [
     dataIndex: 'id',
     key: 'id',
     width: 48,
-    render: (_, __, index) => <span>{index + 1}</span>,
+    render: (_, __, index) => (
+      <Cell isFirst isGrayText>
+        {index + 1}
+      </Cell>
+    ),
   },
   {
     title: 'Тип',
     dataIndex: '_type',
     key: '_type',
     width: 120,
-    render: (value) => <span>{value[0]}</span>,
+    render: (value) => <Cell>{value[0]}</Cell>,
   },
   {
     title: 'Дата установки',
     dataIndex: 'installation_date',
     key: 'installation_date',
     width: 160,
-    render: (value) => <span>{formatDate(value)}</span>,
+    render: (value) => <Cell>{formatDate(value)}</Cell>,
   },
   {
     title: 'Автоматический',
     dataIndex: 'is_automatic',
     key: 'is_automatic',
     width: 128,
-    render: (value) => (
-      <span>{value === null ? 'N/D' : value ? 'Да' : 'Нет'}</span>
-    ),
+    render: (value) => <Cell>{IS_AUTOMATIC_MAP[value]}</Cell>,
   },
   {
     title: 'Текущие показания',
     dataIndex: 'initial_values',
     key: 'initial_values',
     width: 146,
+    render: (value) => <Cell>{value}</Cell>,
   },
   {
     title: 'Адрес',
     dataIndex: 'area',
     key: 'area',
     width: 430,
+    render: () => <Cell>{'something'}</Cell>,
   },
   {
     title: 'Примечание',
     dataIndex: 'description',
     key: 'description',
     width: 304,
-    render: (value) => <Cell value={value} />,
+    render: (value) => <Cell isGrayText>{value}</Cell>,
   },
   {
     title: '',
@@ -69,7 +82,13 @@ export const COLUMNS: ColumnProps[] = [
     key: 'operations',
     width: 72,
     render: (_, record) => (
-      <Icon name={Icons.trash} onClick={() => console.log(record.id)} />
+      <Cell className="trash">
+        <Icon
+          className="trash-icon"
+          name={Icons.trash}
+          onClick={() => console.log(record.id)}
+        />
+      </Cell>
     ),
   },
 ];

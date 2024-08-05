@@ -1,0 +1,12 @@
+.cell {
+  font-size: 14px;
+  padding: 16px 12px 16px 12px;
+
+  &.isFirst {
+    padding-left: 20px;
+  }
+
+  &.isGrayText {
+    color: var(--gray-cell);
+  }
+}
