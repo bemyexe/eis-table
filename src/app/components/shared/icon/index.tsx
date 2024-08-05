@@ -10,8 +10,8 @@ export interface IconProps {
 
 export const Icon = ({
   name,
-  width = '19px',
-  height = '19px',
+  width = '14px',
+  height = '16px',
   className,
   onClick,
 }: IconProps) => (
