@@ -1,6 +1,6 @@
-import { Meters } from '../../../@types';
+import { Meter } from '../../../@types';
 
-export const getMeters = (page = 1, limit = 20): Promise<Meters> => {
+export const getMeters = (page = 1, limit = 20): Promise<Meter[]> => {
   const offset = (page - 1) * limit;
   return fetch(
     `http://showroom.eis24.me/api/v4/test/meters/?limit=${limit}&offset=${offset}`
