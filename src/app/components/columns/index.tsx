@@ -5,6 +5,8 @@ import { Icon } from '../shared/icon';
 import { IconKey, Icons } from '../shared/icon/enum/icon-enum';
 
 import { Cell } from './cell';
+import { IndexCell } from './index-cell';
+import { OperationCell } from './operation-cell';
 
 import './style.css';
 
@@ -18,6 +20,7 @@ const TYPE_MAP: { [key: string]: string } = {
   ColdWaterAreaMeter: 'ХВС',
   HotWaterAreaMeter: 'ГВС',
 };
+
 interface ColumnProps {
   title: string;
   dataIndex: string;
@@ -34,7 +37,7 @@ export const COLUMNS: ColumnProps[] = [
     width: 48,
     render: (_, __, index) => (
       <Cell isFirst isGrayText>
-        {index + 1}
+        <IndexCell index={index} />
       </Cell>
     ),
   },
@@ -93,7 +96,7 @@ export const COLUMNS: ColumnProps[] = [
     render: (_, record) => (
       <Cell className="trash">
         <div className="trash-icon">
-          <Icon name={Icons.trash} onClick={() => console.log(record.id)} />
+          <OperationCell meterId={record.id} />
         </div>
       </Cell>
     ),
