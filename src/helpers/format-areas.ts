@@ -1,6 +1,6 @@
-import { Area, Areas, FormatArea, FormatAreas } from '../../@types';
+import { Area, FormatArea } from '../../@types';
 
-export const formatAreas = (areas: Areas): FormatAreas =>
+export const formatAreas = (areas: Area[]): FormatArea[] =>
   areas.map((area: Area): FormatArea => {
     const street = area.house.address.split(', ').slice(1).join(', ');
 
