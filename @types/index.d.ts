@@ -14,8 +14,6 @@ export interface Meter {
   initial_values: number[];
 }
 
-export type Meters = Meter[];
-
 interface AreaHouse {
   address: string;
   id: string;
@@ -30,11 +28,7 @@ export interface Area {
   house: AreaHouse;
 }
 
-export type Areas = Area[];
-
 export interface FormatArea {
   id: string;
   address: string;
 }
-
-export type FormatAreas = FormatArea[];
