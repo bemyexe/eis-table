@@ -18,7 +18,6 @@ const TYPE_MAP: { [key: string]: string } = {
   ColdWaterAreaMeter: 'ХВС',
   HotWaterAreaMeter: 'ГВС',
 };
-
 interface ColumnProps {
   title: string;
   dataIndex: string;
@@ -77,7 +76,7 @@ export const COLUMNS: ColumnProps[] = [
     dataIndex: 'area',
     key: 'area',
     width: 430,
-    render: () => <Cell>{'something'}</Cell>,
+    render: (value) => <Cell>{value}</Cell>,
   },
   {
     title: 'Примечание',
