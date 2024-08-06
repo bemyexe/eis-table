@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import Table from 'rc-table';
 
 import { Area } from '../../@types';
@@ -6,6 +6,7 @@ import { useMetersQuery } from '../api/hooks/';
 import { useAreasQuery } from '../api/hooks/use-areas-query';
 import { formatAreas } from '../helpers';
 import { mergeData } from '../helpers/merge-data';
+import { paginationStore } from '../mobx/store';
 
 import { COLUMNS } from './components/columns';
 
@@ -13,10 +14,9 @@ import './style.css';
 
 const MAX_TABLE_HEIGHT = 870;
 
-export const App = () => {
-  const [page, setPage] = useState(1);
-
-  const { meters = [], isLoading } = useMetersQuery(page);
+export const App = observer(() => {
+  const current = paginationStore.currentPage;
+  const { meters = [], isLoading } = useMetersQuery(current);
   const { areas, isSuccessAreas } = useAreasQuery(meters);
 
   const formattedAreas = isSuccessAreas ? formatAreas(areas as Area[]) : [];
@@ -36,19 +36,13 @@ export const App = () => {
           scroll={{ y: MAX_TABLE_HEIGHT }}
           footer={() => (
             <div>
-              <button
-                onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
-              >
-                prev
-              </button>
-              {'              '} <p>{page}</p>
-              <button onClick={() => setPage((prevPage) => prevPage + 1)}>
-                next
-              </button>
+              <button onClick={() => paginationStore.prevPage()}>prev</button>
+              {'              '} <p>{current}</p>
+              <button onClick={() => paginationStore.nextPage()}>next</button>
             </div>
           )}
         />
       </div>
     </div>
   );
-};
+});
