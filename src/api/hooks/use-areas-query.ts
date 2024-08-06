@@ -1,16 +1,16 @@
 import { useQueries } from '@tanstack/react-query';
 
-import { Areas, Meter, Meters } from '../../../@types';
+import { Area, Meter } from '../../../@types';
 import { getAreas } from '../requests';
 
-export const useAreasQuery = (meters: Meters) => {
+export const useAreasQuery = (meters: Meter[]) => {
   const areasQueries = useQueries({
     queries: meters
       ? meters.map((meter: Meter) => {
           return {
             queryKey: ['area', meter.area.id],
             queryFn: () => getAreas(meter.area.id),
-            select: (areas: Areas) => areas[0],
+            select: (areas: Area[]) => areas[0],
             staleTime: Infinity,
           };
         })
@@ -22,7 +22,6 @@ export const useAreasQuery = (meters: Meters) => {
       };
     },
   });
-
   const { areas, isSuccessAreas } = areasQueries;
 
   return { areas, isSuccessAreas };
