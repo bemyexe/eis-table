@@ -1,0 +1,14 @@
+.trash-button {
+  padding: 12px;
+  background: var(--red-100);
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:active {
+    background: var(--red-200);
+  }
+
+  &:disabled {
+    background: var(--gray-100);
+  }
+}
