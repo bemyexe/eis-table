@@ -19,6 +19,12 @@
       border-radius: 12px;
       overflow: hidden;
     }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
   }
 }
 

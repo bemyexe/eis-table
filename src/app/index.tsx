@@ -9,14 +9,15 @@ import { mergeData } from '../helpers/merge-data';
 import { paginationStore } from '../mobx/store';
 
 import { COLUMNS } from './components/columns';
+import { Button } from './components/shared/button';
 
 import './style.css';
 
 const MAX_TABLE_HEIGHT = 870;
 
 export const App = observer(() => {
-  const current = paginationStore.currentPage;
-  const { meters = [], isLoading } = useMetersQuery(current);
+  const { currentPage } = paginationStore;
+  const { meters = [], isLoading, isError } = useMetersQuery(currentPage);
   const { areas, isSuccessAreas } = useAreasQuery(meters);
 
   const formattedAreas = isSuccessAreas ? formatAreas(areas as Area[]) : [];
@@ -24,6 +25,7 @@ export const App = observer(() => {
   const rows = mergeData(meters, formattedAreas);
 
   if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>Error</div>;
 
   return (
     <div className="app">
@@ -35,10 +37,20 @@ export const App = observer(() => {
           data={rows}
           scroll={{ y: MAX_TABLE_HEIGHT }}
           footer={() => (
-            <div>
-              <button onClick={() => paginationStore.prevPage()}>prev</button>
-              {'              '} <p>{current}</p>
-              <button onClick={() => paginationStore.nextPage()}>next</button>
+            <div className="pagination">
+              <Button
+                variant="paginate"
+                onClick={() => paginationStore.prevPage()}
+              >
+                prev
+              </Button>
+              <p>{currentPage}</p>
+              <Button
+                variant="paginate"
+                onClick={() => paginationStore.nextPage()}
+              >
+                next
+              </Button>
             </div>
           )}
         />
