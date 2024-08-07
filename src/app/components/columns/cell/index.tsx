@@ -16,14 +16,12 @@ export const Cell = ({
   isFirst,
   isGrayText,
 }: CellProps) => {
-  return (
-    <div
-      className={clsx('cell', className, {
-        isFirst: isFirst,
-        isGrayText: isGrayText,
-      })}
-    >
-      {children}
-    </div>
-  );
+  <div
+    className={clsx('cell', className, {
+      isFirst: isFirst,
+      isGrayText: isGrayText,
+    })}
+  >
+    {children}
+  </div>;
 };
