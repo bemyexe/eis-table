@@ -1,11 +1,9 @@
-import { ReactNode } from 'react';
+import { ComponentProps } from 'react';
 import clsx from 'clsx';
 
 import './style.css';
 
-interface CellProps {
-  className?: string;
-  children: ReactNode;
+interface CellProps extends ComponentProps<'div'> {
   isFirst?: boolean;
   isGrayText?: boolean;
 }
@@ -15,13 +13,17 @@ export const Cell = ({
   children,
   isFirst,
   isGrayText,
+  ...props
 }: CellProps) => {
-  <div
-    className={clsx('cell', className, {
-      isFirst: isFirst,
-      isGrayText: isGrayText,
-    })}
-  >
-    {children}
-  </div>;
+  return (
+    <div
+      className={clsx('cell', className, {
+        isFirst: isFirst,
+        isGrayText: isGrayText,
+      })}
+      {...props}
+    >
+      {children}
+    </div>
+  );
 };
