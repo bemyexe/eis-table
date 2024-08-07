@@ -4,6 +4,7 @@ import Table from 'rc-table';
 import { Area } from '../../@types';
 import { useMetersQuery } from '../api/hooks/';
 import { useAreasQuery } from '../api/hooks/use-areas-query';
+import { FAKE } from '../const/const';
 import { formatAreas } from '../helpers';
 import { mergeData } from '../helpers/merge-data';
 import { paginationStore } from '../mobx/store';
@@ -22,10 +23,9 @@ export const App = observer(() => {
 
   const formattedAreas = isSuccessAreas ? formatAreas(areas as Area[]) : [];
 
-  const rows = mergeData(meters, formattedAreas);
+  const rows = isError ? FAKE : mergeData(meters, formattedAreas);
 
   if (isLoading) return <div>Loading</div>;
-  if (isError) return <div>Error</div>;
 
   return (
     <div className="app">
@@ -35,6 +35,7 @@ export const App = observer(() => {
           className="table"
           columns={COLUMNS}
           data={rows}
+          rowKey={(record) => record.id}
           scroll={{ y: MAX_TABLE_HEIGHT }}
           footer={() => (
             <div className="pagination">
