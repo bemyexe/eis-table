@@ -6,8 +6,6 @@ import { Button } from '../../shared/button';
 import { Icon } from '../../shared/icon';
 import { Icons } from '../../shared/icon/enum/icon-enum';
 
-import './style.css';
-
 interface OperationCellProps {
   meterId: Meter['id'];
 }
@@ -18,8 +16,7 @@ export const OperationCell = ({ meterId }: OperationCellProps) => {
   const { mutation } = useDeleteMeterMutation(currentPage);
 
   const handleDeleteMeter = () => {
-    // mutation.mutate(meterId);
-    console.log('fff');
+    mutation.mutate(meterId);
   };
 
   const { ref: ref, isPressed: isPressed } = usePressState<HTMLButtonElement>();

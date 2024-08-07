@@ -94,10 +94,8 @@ export const COLUMNS: ColumnProps[] = [
     key: 'operations',
     width: 72,
     render: (_, record) => (
-      <Cell className="trash">
-        <div className="trash-icon">
-          <OperationCell meterId={record.id} />
-        </div>
+      <Cell className="operation">
+        <OperationCell meterId={record.id} />
       </Cell>
     ),
   },
