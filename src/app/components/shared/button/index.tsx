@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import './style.css';
 
-type ButtonVariant = 'danger';
+type ButtonVariant = 'danger' | 'paginate';
 
 interface ButtonProps extends ComponentProps<'button'> {
   variant: ButtonVariant;

@@ -15,4 +15,19 @@
       background: var(--gray-100);
     }
   }
+
+  &.paginate {
+    padding: 8px;
+    background: var(--gray-100);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    &:active {
+      background: var(--gray-500);
+    }
+
+    &:disabled {
+      background: var(--gray-800);
+    }
+  }
 }
