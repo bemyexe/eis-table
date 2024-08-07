@@ -7,11 +7,12 @@ export const useMetersQuery = (page: number) => {
     data: meters,
     isLoading,
     isSuccess,
+    isError,
   } = useQuery({
     queryKey: ['meters', page],
     queryFn: () => getMeters(page),
     placeholderData: keepPreviousData,
   });
 
-  return { meters, isLoading, isSuccess };
+  return { meters, isLoading, isSuccess, isError };
 };
