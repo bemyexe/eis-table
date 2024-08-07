@@ -31,6 +31,7 @@ export const App = observer(() => {
     <div className="app">
       <div className="wrapper">
         <div className="title">Список счетчиков</div>
+        {isError && <p>Server dead ;(</p>}
         <Table
           className="table"
           columns={COLUMNS}
