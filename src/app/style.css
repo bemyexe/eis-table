@@ -46,6 +46,10 @@ thead {
   }
 }
 
+.rc-table-cell {
+  vertical-align: middle;
+}
+
 tbody {
   tr {
     background-color: var(--row);
