@@ -2,7 +2,7 @@
 
 ### Project
 
-- housing and utilities service table
+- housing and utilities service table 
 - [https://eis-table.netlify.app/](https://eis-table.netlify.app/)
 
 ### Stack
